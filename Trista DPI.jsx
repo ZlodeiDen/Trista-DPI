@@ -826,9 +826,15 @@ function checkDocuments() {
 		var myLinksEmbedded = 0;
          var mylinksAll = myDocument.links;
 		for (var lnk = 0; lnk < myDocument.links.length; lnk++) {
+            try {
              if (mylinksAll[lnk].status == LinkStatus.NORMAL) {
                  myLinksNormal++;
                  continue;
+              }
+          } catch (err) { 
+              var errlnk  = mylinksAll[lnk];
+              alert (mylinksAll[lnk]);
+              continue; /** ловля редкой ошибки, при которой линки не имеют статуса */
               }
 			switch (myDocument.links[lnk].status) {
 				case LinkStatus.LINK_OUT_OF_DATE:
