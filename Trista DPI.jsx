@@ -8,8 +8,8 @@
 // https://github.com/bteapot/Trista-DPI
 // -----------------------------------------------------------------------------------
 /**
-2014, Евгений Борисов провел оптимизацию инициализации.
-Поиск спреда-мастера отныне ведется не перебором всего и вся, а отходом к атрибуту parent
+2014, Евгений Борисов провел оптимизацию
+1. поиск спреда-мастера отныне ведется не перебором всего и вся, а отходом к атрибуту parent
 В результате произошло ускорение инициализации в несколько раз.
 
 */
@@ -834,7 +834,7 @@ function checkDocuments() {
           } catch (err) { 
               var errlnk  = mylinksAll[lnk];
               alert (mylinksAll[lnk]);
-              continue; /** ловля редкой ошибки, при которой линки не имеют статуса */
+              continue; /** ловля редкой ошибки, при которой линки не имеют статуса*/
               }
 			switch (myDocument.links[lnk].status) {
 				case LinkStatus.LINK_OUT_OF_DATE:
@@ -2239,7 +2239,7 @@ function backupImages() {
 		}
 
 		// Вместе с картинками (чего уж там) сохраним и .indd документ
-		var backupDocumentName = uniqueFileName(backupFolder.fullName, cleanupPath(File.decode(myDocument.fullName.name)));
+		var backupDocumentName = uniqueFileName(backupFolder.fullName, cleanupPath(File.decode(myDocument.fullName.name)), myDocument);
 		if (!myDocument.fullName.copy(backupDocumentName)) {
 			alert(localize(msgErrorCopyingFile, File.decode(myDocument.name)));
 			logFile.write(kLogFileERR + "\n");
@@ -2256,7 +2256,7 @@ function backupImages() {
 			showStatus(undefined,undefined, undefined, undefined);
 
 			var myFile = new File(myBackupList[grc].filePath);
-			var backupFileName = uniqueFileName(backupFolder.fullName, cleanupPath(File.decode(myFile.name)));
+			var backupFileName = uniqueFileName(backupFolder.fullName, cleanupPath(File.decode(myFile.name)), myDocument);
 			if (!myFile.copy(backupFileName)) {
 				alert(localize(msgErrorCopyingFile, myBackupList[grc].filePath));
 				flagStopExecution = true;
@@ -2461,7 +2461,7 @@ function unembedImages() {
 
 // Обработаем картинки
 // ------------------------------------------------------
-function processImages() {
+function processImages(inddDocName) {
 
 	// Функция для передачи в Фотошоп
 	function bridgeFunction(myFilePath, myNewFilePath, myDoResample, myResampleMethodCode, myActualDPI, myTargetDPI, myMaxPercentage, myChangeFormatCode, myMakeLayerFromBackground, myLeaveGraphicsOpen) {
@@ -2574,7 +2574,7 @@ function processImages() {
 		if (myDoChangeFormat) {
 			var myFile = new File(grc);
 			var myPath = myFile.path;
-			myNewFilePath = uniqueFileName(myPath, cleanupPath(myFile.name.replace(/(.+\.).*$/, "$1") + (myChangeFormatCode == 1 ? "tif" : "psd")));
+			myNewFilePath = uniqueFileName(myPath, cleanupPath(myFile.name.replace(/(.+\.).*$/, "$1") + (myChangeFormatCode == 1 ? "tif" : "psd")), inddDocName );
 			selectedGraphics[grc][kGraphicsNewFilePath] = myNewFilePath;
 			selectedGraphics[grc][kGraphicsDoRelink] = true;
 		} else {
@@ -3270,10 +3270,25 @@ function fillSpaces(myNumber, myMinDigits) {
 	return myString;
 }
 
+// получаем случайную строку
+function makeid()
+{
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 10; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 // Получим уникальное имя файла
 // ------------------------------------------------------
-function uniqueFileName(myFolderName, myFileName) {
-	var myFile = new File(myFolderName + "/" + myFileName);
+function uniqueFileName(myFolderName, myFileName, inddName) {
+    
+folderP = inddName.filePath;
+    var myFile = new File(folderP + "/" + makeid()+'_'+myFileName);
+
 	var i = 1;
 	while (myFile.exists) {
 		myFile = new File(myFolderName + "/" + myFileName.substr(0, myFileName.lastIndexOf(".")) + " " + i + myFileName.substr(myFileName.lastIndexOf("."), myFileName.length));
