@@ -1,5 +1,5 @@
-* [Русский](#lang_rus)
-* [English](#lang_eng)
+* :ru: [Русский](#lang_rus)
+* :en: [English](#lang_eng)
 
 <a name="lang_rus"><a>Trista DPI
 ====================
