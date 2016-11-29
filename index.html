@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Trista-dpi flekst&#39;s edition by flekst</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Trista-dpi flekst&#39;s edition</h1>
+      <h2 class="project-tagline">Пакетная обработка растровых изображений в документах Adobe InDesign</h2>
+      <a href="https://github.com/flekst/Trista-DPI" class="btn">View on GitHub</a>
+      <a href="https://github.com/flekst/Trista-DPI/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/flekst/Trista-DPI/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>Оптимизированная версия срипта <a href="https://github.com/bteapot/Trista-DPI">/bteapot/Trista-DPI</a> </p>
+
+<ul>
+<li><a href="#lang_rus">Русский</a></li>
+<li><a href="#lang_eng">English</a></li>
+</ul>
+
+<h1>
+<a id="trista-dpi" class="anchor" href="#trista-dpi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a name="lang_rus"></a>Trista DPI</h1>
+
+<h2>
+<a id="Назначение" class="anchor" href="#%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Назначение</h2>
+
+<p>Пакетная обработка растровых изображений в документах Adobe InDesign.</p>
+
+<p>Скрипт выполняет рутинные задачи, возникающие после создания "сырого" макета с необработанными исходными изображениями.</p>
+
+<p>В режиме "Допечатный процесс" подцепленные в вёрстку JPEG пересохраняются в ту-же папку в TIFF или PSD, в зависимости от наличия обтравки, и персчитываются на (как правило) 300 dpi. Исходные JPEG удаляются.</p>
+
+<p>В режиме "Цифровой процесс" вся графика экспортируется в PNG методом "Save for Web" с параметрами PNG-24, Transparency и Convert to sRGB.</p>
+
+<p>В режиме "Развнедрение картинок" внедрённые и вставленные в вёрстку изображения извлекаются во внешние файлы.</p>
+
+<h2>
+<a id="Функциональность" class="anchor" href="#%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Функциональность</h2>
+
+<h3>
+<a id="Форматы-файлов" class="anchor" href="#%D0%A4%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D1%8B-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Форматы файлов</h3>
+
+<h6>
+<a id="Допечатный-процесс" class="anchor" href="#%D0%94%D0%BE%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Допечатный процесс</h6>
+
+<p>В обработку берутся все поддерживаемые InDesign форматы растровой графики.
+По желанию JPEG, PNG, GIF и BMP можно пересохранять в TIFF или PSD.
+Новые файлы создаются в той-же папке, что и исходные.</p>
+
+<ul>
+<li>
+<strong>Сохранять как TIFF</strong> – все неполиграфические форматы (JPEG, PNG и т.п.) будут пересохранены в TIFF.</li>
+<li>
+<strong>Сохранять как TIFF, с обтравкой в PSD</strong> – вся неполиграфия в TIFF, а при обнаружении обтравки на картинке в InDesign – в PSD.</li>
+<li>
+<strong>Сохранять как PSD</strong> – вся неполиграфия в PSD.</li>
+</ul>
+
+<p>При сохранении в PSD можно отрывать лэер от фона и убирать обтравку в InDesign.</p>
+
+<p>При желании можно определять и обрабатывать файлы Photoshop EPS, что несколько замедляет проверку изображений.</p>
+
+<p>Оригиналы изображений можно удалять.</p>
+
+<h6>
+<a id="Цифровой-процесс" class="anchor" href="#%D0%A6%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%BE%D0%B9-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Цифровой процесс</h6>
+
+<p>Изображения всех поддерживаемых InDesign форматов экспортируются в PNG.</p>
+
+<ul>
+<li>
+<strong>Только не-PNG файлы</strong> – в обработку берутся все форматы, кроме PNG.</li>
+<li>
+<strong>Все файлы, включая PNG</strong> – включая PNG.</li>
+</ul>
+
+<p>Bitmap-изображения не экспортируются в PNG.</p>
+
+<p>Оригиналы изображений можно удалять.</p>
+
+<h3>
+<a id="Разрешение" class="anchor" href="#%D0%A0%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Разрешение</h3>
+
+<p>Изображения Black and White (Bitmap) обрабатываются отдельно от Color и Grayscale. Настройки желаемого разрешения и дельты (минимального отличия разрешения от желаемого), соответственно, также задаются отдельно. По-умолчанию это 300 dpi для Color и Grayscale, и 1200 dpi для Bitmap.
+При дельте равной нулю изображение обрабатывается безусловно.</p>
+
+<p>При рассчёте необходимого разрешения учитываются параметры трансформации всех вхождений изображения.</p>
+
+<p>Можно выбрать метод изменения размера изображений:</p>
+
+<ul>
+<li>
+<strong>Bicubic</strong> – по-умолчанию, и для уменьшения, и для увеличения.</li>
+<li>
+<strong>Bicubic sharper/smoother</strong> – для увеличения резкости при уменьшении, и для сглаживания при увеличении.<br>
+</li>
+</ul>
+
+<h3>
+<a id="Области-действия" class="anchor" href="#%D0%9E%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D0%B8-%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Области действия</h3>
+
+<ul>
+<li>
+<strong>Все открытые документы</strong> – в обработку идут все документы, открытые в InDesign.</li>
+<li>
+<strong>Активный документ</strong> – в обработку идёт только активный документ.</li>
+<li>
+<strong>Выбранные страницы</strong> – в обработку идут только выбранные страницы активного документа.</li>
+<li>
+<strong>Выбранные изображения</strong> – в обработку идут только выбранные в InDesign изображения активного документа.</li>
+</ul>
+
+<p>Изображения за пределами вылетов можно обрабатывать или игнорировать.</p>
+
+<p>Изображения на мастерах из обработки исключаются.</p>
+
+<h3>
+<a id="Список-изображений" class="anchor" href="#%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Список изображений</h3>
+
+<p>В обработку идут только изображения, выбранные в этом списке.
+При выделении только одного изображения показывается список документов и номера полос, на которых выделенное изображение присутствует.</p>
+
+<p>Файлы с правами доступа только для чтения отмечаются красной точкой и из обработки исключаются.</p>
+
+<h3>
+<a id="Резервное-копирование" class="anchor" href="#%D0%A0%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%BE%D0%B5-%D0%BA%D0%BE%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Резервное копирование</h3>
+
+<p>По желанию можно делать резервные копии всех изменяемых файлов, включая публикацию InDesign.
+При совпадении имён файлов, лежащих в разных папках, к имени файла добавляется уникальный номер.</p>
+
+<p>Можно включить автоматическое удаление резервных копий, сделанных более месяца назад.</p>
+
+<p>Ранее созданные резервные копии могут быть автоматически восстановлены при запуске скрипта без открытых документов InDesign.</p>
+
+<h3>
+<a id="Развнедрение" class="anchor" href="#%D0%A0%D0%B0%D0%B7%D0%B2%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Развнедрение</h3>
+
+<p>Картинки, штатно внедрённые в документ, и картинки, вставленные командами Копировать/Вставить, могут быть автоматически извлечены.</p>
+
+<h2>
+<a id="Установка" class="anchor" href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Установка</h2>
+
+<p>Файл со скриптом (<code>Trista DPI.jsx</code>) положить в папку <code>Scripts Panel</code>. Открыть её можно прямо из InDesign: в палитре <code>Scripts</code> щёлкнуть правой кнопкой по папке <code>User</code> и сказать <code>Reveal in Finder</code> на Маке, или <code>Reveal In Explorer</code> под Windows.</p>
+
+<h2>
+<a id="Благодарности" class="anchor" href="#%D0%91%D0%BB%D0%B0%D0%B3%D0%BE%D0%B4%D0%B0%D1%80%D0%BD%D0%BE%D1%81%D1%82%D0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Благодарности</h2>
+
+<p><strong>Анастасия Морозова</strong> – начальная идея, постановка задач и тестирование по допечатному процессу.</p>
+
+<p><strong>Крэйг МакКаббин</strong> – идея и тестирование цифрового процесса.</p>
+
+<h1>
+<a id="trista-dpi-1" class="anchor" href="#trista-dpi-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a name="lang_eng"></a>Trista DPI</h1>
+
+<h2>
+<a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h2>
+
+<p>Batch processing of raster images in Adobe InDesign documents.</p>
+
+<p>This script performs the routine tasks that occur in publishing workflow after the creation of "raw" layout with raw source images.</p>
+
+<p>"Prepress workflow" mode: linked JPEGs are resaved in the same folder as TIFF or PSD, depending on the presence of clipping, and resampled to (usually) 300 dpi. Source JPEGs are removed.</p>
+
+<p>"Digital workflow" mode: all images are exported to PNG by "Save for Web" method with PNG-24, Transparency and Convert to sRGB parameters.</p>
+
+<p>"Unembed images" mode: embedded and pasted images are extracted into external files.</p>
+
+<h2>
+<a id="functionality" class="anchor" href="#functionality" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Functionality</h2>
+
+<h3>
+<a id="file-formats" class="anchor" href="#file-formats" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File formats</h3>
+
+<h6>
+<a id="prepress-workflow" class="anchor" href="#prepress-workflow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prepress workflow</h6>
+
+<p>All InDesign raster graphic formats are supported.
+Optionally JPEG, PNG, GIF and BMP can be resaved as TIFF or PSD.
+New files are created in the same folder as originals.</p>
+
+<ul>
+<li>
+<strong>Save as TIFF</strong> – all non-prepress formats (JPEG, PNG etc.) are resaved to TIFF.</li>
+<li>
+<strong>Save as TIFF, PSD when clipping detected</strong> – all non-prepress to TIFF, and to PSD when detecting a clipping path in InDesign.</li>
+<li>
+<strong>Save as PSD</strong> – all non-prepress to PSD.</li>
+</ul>
+
+<p>Background layer can be transformed to normal layer, and clipping path in InDesign can be removed when resaving to PSD.</p>
+
+<p>Photoshop EPS files can be optionally detected and processed, which is slightly slowing images checking process.</p>
+
+<p>Original images can be removed.</p>
+
+<h6>
+<a id="digital-workflow" class="anchor" href="#digital-workflow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Digital workflow</h6>
+
+<p>Images of all InDesign-supported formats are exported to PNG.</p>
+
+<ul>
+<li>
+<strong>Non-PNG files only</strong> – all images excluding PNG are exported to PNG.</li>
+<li>
+<strong>All files including PNG</strong> – including PNG.</li>
+</ul>
+
+<p>Bitmap images are not exported to PNG.</p>
+
+<p>Original images can be removed.</p>
+
+<h3>
+<a id="resolution" class="anchor" href="#resolution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resolution</h3>
+
+<p>Black and White (Bitmap) graphics processed separately from Color and Grayscale. Target resolution and delta (minimal difference from target) settings are also separated. By default it's a 300 dpi for Color and Grayscale, and 1200 dpi for Bitmap.
+When the delta is zero, the image is processed unconditionally.</p>
+
+<p>Transformation parameters of every image's occurrence are considered when calculating target resolution.</p>
+
+<p>Image resampling method can be choosen from:</p>
+
+<ul>
+<li>
+<strong>Bicubic</strong> – default, for downsampling and upsampling.</li>
+<li>
+<strong>Bicubic sharper/smoother</strong> – sharper for downsampling and smoother for upsampling.<br>
+</li>
+</ul>
+
+<h3>
+<a id="scopes" class="anchor" href="#scopes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scopes</h3>
+
+<ul>
+<li>
+<strong>All opened documents</strong> – all documents, opened in InDesign will be processed.</li>
+<li>
+<strong>Active document</strong> – only active document will be processed.</li>
+<li>
+<strong>Selected pages</strong> – only selected pages of active document will be processed.</li>
+<li>
+<strong>Selected images</strong> – only selected in InDesign images will be processed.</li>
+</ul>
+
+<p>Images that are off-bleeds can be processed or ignored.</p>
+
+<p>Images on master pages are always ignored.</p>
+
+<h3>
+<a id="images-list" class="anchor" href="#images-list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Images list</h3>
+
+<p>Only images selected in this list will be processed.
+When only one image is selected, all its occurences are listed with corresponding document name and page number.</p>
+
+<p>Read-only files are marked with a red dot and always ignored.</p>
+
+<h3>
+<a id="backup" class="anchor" href="#backup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Backup</h3>
+
+<p>Optionally, back up copies of all changed files can be made, including the InDesign publication.
+When the file names from different folders are identical, unique number are added to file names.</p>
+
+<p>Backups created more than month ago can be automatically deleted if desired.</p>
+
+<p>Previously created backups can be automatically restored by running script with no documents open in InDesign.</p>
+
+<h3>
+<a id="unembedding" class="anchor" href="#unembedding" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unembedding</h3>
+
+<p>Embedded images and images pasted into document by Copy/Paste commands can be automatically unembedded.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Script file (<code>Trista DPI.jsx</code>) should be placed in folder <code>Scripts Panel</code>. It can be easily accessed from InDesign's Scripts panel by right-clicking a <code>User</code> folder, and choosing <code>Reveal In Finder</code>  in Mac OS or <code>Reveal In Explorer</code> in Windows.</p>
+
+<h2>
+<a id="acknowledgements" class="anchor" href="#acknowledgements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Acknowledgements</h2>
+
+<p><strong>Anastasia Morozova</strong> – initial idea, prepress task definition and testing.</p>
+
+<p><strong>Craig McCubbin</strong> – idea and testing of digital process.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/flekst/Trista-DPI">Trista-dpi flekst&#39;s edition</a> is maintained by <a href="https://github.com/flekst">flekst</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
