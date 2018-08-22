@@ -1,4 +1,5 @@
 // Пакетная обработка растровых изображений в документах Adobe InDesign
+// Пакетная обработка растровых изображений в документах Adobe InDesign
 //
 // Денис Либит
 // Студия КолорБокс
@@ -38,6 +39,9 @@ const kLocalesList = [
 	["ru", "Русский"],
 	["en", "English"]];
 
+const msgRenameToID = {
+	ru: "Переименовать файлы в ID",
+	en: "Rename files to ID" };
 const msgCheckingOpenedDocumentsStatus = {
 	ru: "ПРОВЕРКА ОТКРЫТЫХ ДОКУМЕНТОВ",
 	en: "CHECKING OPENED DOCUMENTS" };
@@ -269,6 +273,7 @@ var flagOldBackupsDeleted = false;
 // Константы
 const kPrefsLocale = "locale";
 const kPrefsProcessEmbedded = "processEmbedded";
+const kPrefsRenameToID="renameToID";
 const kPrefsProcessBitmaps = "processBitmaps";
 const kPrefsLeaveGraphicsOpen = "leaveGraphicsOpen";
 const kPrefsChangeFormatOf = "changeFormat";
@@ -493,6 +498,7 @@ function initialSettings() {
 	}
 
 	preferences[kPrefsProcessEmbedded] = false;
+    preferences[kPrefsRenameToID]=false;
 	preferences[kPrefsProcessBitmaps] = false;
 	preferences[kPrefsLeaveGraphicsOpen] = false;
 
@@ -809,8 +815,10 @@ function checkDocuments() {
 
 	activeDocument = documentID(app.activeDocument);
 
-	for (var doc = 0; doc < app.documents.length; doc++) {
-		var myDocument = app.documents[doc];
+//	for (var doc = 0; doc < app.documents.length; doc++) {
+		// var myDocument = app.documents[doc];
+        {
+		var myDocument = app.activeDocument;
 
 		showStatus(undefined, myDocument.name, doc, undefined);
 
@@ -871,7 +879,7 @@ function checkDocuments() {
 
 		documents[docID][kDocumentsBackupList] = {};
 
-		if (flagStopExecution) { break }
+		if (flagStopExecution) { exit(); }
 	}
 
 	// Предупредить о необновлённых картинках
@@ -1179,6 +1187,14 @@ function displayPreferences() {
 			preferences[kPrefsLeaveGraphicsOpen] = myLeaveGraphicsOpen.value;
 		}
 		myLeaveGraphicsOpen.value = preferences[kPrefsLeaveGraphicsOpen];
+        
+        /* TODO uniqueID */ 
+        // Переименовывать в id
+		var myRenameToID = add("checkbox", undefined, localize(msgRenameToID));
+		myRenameToID.onClick = function() {
+			preferences[kPrefsRenameToID] = myRenameToID.value;
+		}
+		myRenameToID.value = preferences[kPrefsRenameToID];
 	}
 
 	// Группа изменения формата
@@ -3281,13 +3297,28 @@ function makeid()
     return text;
 }
 
+function splitFileName(fn) {
+        var len = fn.length;
+        var dotPosition= fn.lastIndexOf(".");
+        var base=fn.substr(0,dotPosition);
+        var ext=fn.substr(dotPosition,len);
+        return { base:base, ext:ext}
+ }
 // Получим уникальное имя файла
 // ------------------------------------------------------
 function uniqueFileName(myFolderName, myFileName) {
-	var myFile = new File(myFolderName + "/" + makeid() + '_' + myFileName);
+    var basename = splitFileName(myFileName).base;
+    basename += "+" + makeid() ;
+    if (preferences[kPrefsRenameToID]) {
+        basename = makeid() ;
+    }
+    var ext= splitFileName(myFileName).ext;
+	
+	var myFile = new File(myFolderName + "/" + basename + ext);
+    
 	var i = 1;
 	while (myFile.exists) {
-		myFile = new File(myFolderName + "/" + myFileName.substr(0, myFileName.lastIndexOf(".")) + " " + i + myFileName.substr(myFileName.lastIndexOf("."), myFileName.length));
+		myFile = new File(myFolderName + "/" + basename + "" + i + ext);
 		i++;
 	}
 	return myFile;
